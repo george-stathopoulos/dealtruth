@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{skroutzHint}from './fallback.js';
+test('blocked Skroutz page retains unverified product search hint',()=>{const x=skroutzHint(new URL('https://www.skroutz.gr/s/62817818/nothing-cmf-watch-3-pro-aluminium-47mm-me-palmografo-dark-grey.html'));assert.equal(x.sourceProductId,'62817818');assert.match(x.name,/nothing cmf watch 3 pro/i);assert.equal(x.price,null);assert.equal(x.confidence,'url_slug_unverified');});
+test('other retailers cannot be inferred as Skroutz',()=>assert.equal(skroutzHint(new URL('https://example.com/s/1234/a.html')),null));
