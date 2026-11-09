@@ -11,3 +11,6 @@ test('identity rejects unrelated model',()=>assert.equal(matchProduct({brand:'No
 test('rejects wrong size even when product name matches',()=>{const desired={name:'Nike Pegasus running shoes',size:'42'};assert.equal(matchProduct({productName:'Nike Pegasus running shoes',size:'43'},desired),false);});
 test('rejects unknown color when exact color requested',()=>{const desired={name:'Nike Pegasus running shoes',color:'black'};assert.equal(matchProduct({productName:'Nike Pegasus running shoes'},desired),false);});
 test('accepts exact requested apparel variant',()=>{const desired={name:'Summer linen midi dress',size:'M',color:'blue'};assert.equal(matchProduct({productName:'Summer linen midi dress',size:'M',color:'blue'},desired),true);});
+
+test('exact identifier does not override mismatched color',()=>{assert.equal(matchProduct({brand:'Nothing',mpn:'CMF-3PRO',color:'silver'}, {...target,color:'dark grey'}),false);});
+test('destination requires explicit provider shipping eligibility',()=>{const offer=candidate('A',100);delete offer.shipsTo;assert.equal(normalizeFeedOffers({offers:[offer]},target,'GR','ALL').offers.length,0);});
