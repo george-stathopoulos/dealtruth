@@ -8,13 +8,13 @@ Smart global shopping investigator: enter a product URL OR product-name query, a
 - Cloudflare Worker /api/lookup, /api/search and /api/archive routes.
 - Language-neutral identity keys: GTIN first; brand + MPN/model second; translated retailer title only fallback.
 - Generic schema.org JSON-LD Product/Offer extraction and normalized offers; optional API.SH Skroutz adapter.
-- Wayback CDX snapshot discovery with links and dates. Snapshots do NOT constitute historical price observations.
+- Wayback CDX snapshot discovery with links and dates; bounded inspection of two snapshots per lookup. Archived structured-data prices are accepted only with matching GTIN or brand+MPN; price observations are clearly not checkout totals.
 - Unknown shipping, taxes, duties and FX remain unknown; no invented delivered-cost ranking.
 - Unit tests for identity, category refinements, archive evidence and product parsing.
 - Fetch timeout and streamed response cap. SSRF and abuse protection still require hardening.
 
 ## Verification
-Latest commits pushed to GitHub. GitHub Actions for latest frontend and Worker commits in progress as of last check; production functionality not yet verified. Do not call the app a working global comparison MVP.
+Latest commits pushed to GitHub. Earlier main-branch frontend workflow passed; new archive extraction frontend and Worker workflows are still running. No live archive extraction has been verified. Do not call the app a working global comparison MVP.
 
 ## Blocking work
 1. Authorized multi-retailer product discovery providers with international coverage and licensing.
