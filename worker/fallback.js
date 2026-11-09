@@ -1,3 +1,3 @@
-// Conservative URL-based product identification when a retailer blocks server-side requests.
-// URL slugs are search hints, never evidence of an actual listing, price, or exact variant.
-export function skroutzHint(url){if(!['skroutz.gr','www.skroutz.gr'].includes(url.hostname))return null;const m=url.pathname.match(/^\/s\/(\d+)\/([^/]+)\.html$/);if(!m)return null;const slug=m[2].replace(/-me-palmografo/gi,'').replace(/-/g,' ').replace(/\s+/g,' ').trim();if(slug.length<5)return null;return{sourceProductId:m[1],name:slug,searchTerms:slug,confidence:'url_slug_unverified',source:'retailer_url_slug',price:null,currency:null,brand:null,sku:null,mpn:null,gtin:null};}
+// URL is only an identity hint, never a verified product, offer or merchant country.
+export function productHint(url){const parts=url.pathname.split('/').filter(Boolean);const slug=parts.filter(p=>/[a-z]/i.test(p)&&p.length>=8).at(-1)||'';const title=decodeURIComponent(slug).replace(/\.(html?|php)$/i,'').replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim().slice(0,180);if(title.length<8)return null;return{sourceProductId:null,name:title,searchTerms:title,confidence:'url_slug_unverified',source:'retailer_url_slug',price:null,currency:null,brand:null,sku:null,mpn:null,gtin:null};}
+export const skroutzHint=productHint;
