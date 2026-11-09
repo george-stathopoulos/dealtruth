@@ -1,20 +1,23 @@
-# DealTruth project state
+# DealTruth project state — 2026-11-09
 
 ## Objective
-One product URL + delivery destination -> automatic product matching, seller comparison, historical evidence and landed costs. Manual retailer entry is explicitly NOT the product.
+Paste one product URL and delivery destination; automatically find real competing offers, shipping, import costs and price-history evidence. Never ask users to enter sellers manually.
 
-## Architecture
-Static GitHub Pages front end; optional Cloudflare Worker for public JSON-LD product metadata extraction. Worker code is committed but deployment requires Cloudflare account ID and API token. Future D1 for Google sign-in and observation history. Data-source integrations are not available yet.
+## Verified infrastructure
+GitHub Pages frontend and Cloudflare Worker deployed successfully; API at https://dealtruth-api.george-stathopoulos.workers.dev. Existing Skroutz URL extracted public product metadata.
 
-## Completed
-Removed manual offer form from primary UI. Implemented URL/destination form with explicit unavailable state, public structured-data extraction Worker and unit tests. No fabricated comparisons or customs estimates.
+## Current implementation
+Added optional API.SH Skroutz product-offer integration, mapping real merchant names and observed item prices and sorting them. UI renders those offers separately, never labels them delivered prices. Unit test covers ordering and unknown shipping. Changes pushed to main; deployment and production integration verification pending.
 
-## Verified
-Source committed to GitHub; CI status and live endpoint still require verification for this milestone.
+## Blocking dependency
+API.SH provider needs a private Cloudflare Worker secret named APISH_KEY, obtained from https://api.sh/ after reviewing provider pricing, permitted usage and data licensing. Do NOT put this key in GitHub variables or browser JS. Without it, existing JSON-LD metadata extraction remains the fallback. API.SH is a third-party service, not the official Skroutz merchant API. Free allowance and terms must be confirmed by user before any financial commitment. See https://api.sh/docs/skroutz-product.
 
-## Blockers
-1. Cloudflare account ID, scoped deploy token and Worker deployment configuration.
-2. Licensed/authorized price comparison and international delivery/import quote data sources. No automatic comparison can be honestly claimed without these.
+## Remaining P0
+- Confirm and configure provider key and legal/commercial suitability
+- Validate real offer count for Apple Watch Skroutz test URL in production
+- Obtain verified shipping and checkout costs per destination; never treat missing as zero
+- Integrate additional authorized retailers, exact variant matching, price history
+- Production acceptance: one link -> multiple verified seller offers -> destination landed cost with transparent confidence
 
-## Next
-Deploy Worker, configure frontend API URL, test real product URLs and coverage; integrate retailer feeds and landed-cost quotes, then Google OAuth.
+## Guardrails
+No fabricated comparisons. No claim of completed MVP until real delivered-price comparison works end to end.
