@@ -1,23 +1,28 @@
-# DealTruth project state — 2026-11-09
+# DealTruth — project state
 
 ## Objective
-Paste one product URL and delivery destination; automatically find real competing offers, shipping, import costs and price-history evidence. Never ask users to enter sellers manually.
+Universal product URL + delivery destination -> accurate identity matching, real retailer offers, delivered-price comparisons, historical evidence. No manual seller entry.
 
-## Verified infrastructure
-GitHub Pages frontend and Cloudflare Worker deployed successfully; API at https://dealtruth-api.george-stathopoulos.workers.dev. Existing Skroutz URL extracted public product metadata.
+## Implemented
+- GitHub Pages URL-first frontend and Cloudflare Worker deployed in earlier milestone.
+- Generic schema.org JSON-LD product/offer parser with brand, SKU, MPN, GTIN and multiple offers.
+- Normalized offer model, destination input and null-by-default shipping/taxes/duties/fees. No delivered-price ranking without complete costs.
+- Optional Skroutz/API.SH provider adapter; requires private provider credentials and validation.
+- Unit tests for multi-offer parsing, unknown prices and international currency separation.
+- Worker fetch timeout and streamed response byte limit.
+- International architecture documented at docs/INTERNATIONAL_ARCHITECTURE.md.
 
-## Current implementation
-Added optional API.SH Skroutz product-offer integration, mapping real merchant names and observed item prices and sorting them. UI renders those offers separately, never labels them delivered prices. Unit test covers ordering and unknown shipping. Changes pushed to main; deployment and production integration verification pending.
+## Current verification
+Latest commits pushed; current GitHub Actions and production smoke test pending. Earlier frontend and Worker deployments passed. Do not claim the latest changes are live until verified.
 
-## Blocking dependency
-API.SH provider needs a private Cloudflare Worker secret named APISH_KEY, obtained from https://api.sh/ after reviewing provider pricing, permitted usage and data licensing. Do NOT put this key in GitHub variables or browser JS. Without it, existing JSON-LD metadata extraction remains the fallback. API.SH is a third-party service, not the official Skroutz merchant API. Free allowance and terms must be confirmed by user before any financial commitment. See https://api.sh/docs/skroutz-product.
+## Not yet implemented
+- Universal retailer discovery and exact variant matching across sources.
+- Authorized multi-country merchant feeds, live shipping/checkout/import quotes and FX conversions.
+- Price history, Google login, saved address and alerts.
+- Production security hardening including DNS-level SSRF mitigation and rate limiting.
 
-## Remaining P0
-- Confirm and configure provider key and legal/commercial suitability
-- Validate real offer count for Apple Watch Skroutz test URL in production
-- Obtain verified shipping and checkout costs per destination; never treat missing as zero
-- Integrate additional authorized retailers, exact variant matching, price history
-- Production acceptance: one link -> multiple verified seller offers -> destination landed cost with transparent confidence
+## Release gate
+At least three independent retailer domains and multiple countries, verified real seller offers and destination quotes, correct product identity, full CI, live production smoke test. The current app is not a complete MVP.
 
-## Guardrails
-No fabricated comparisons. No claim of completed MVP until real delivered-price comparison works end to end.
+## Next
+Verify latest CI and production; then select and validate permitted international retailer/merchant feeds, shipping and tax providers before claiming global comparison.
