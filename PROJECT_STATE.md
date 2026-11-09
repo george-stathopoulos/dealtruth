@@ -1,24 +1,20 @@
-# DealTruth project state — 2026-11-09
+# DealTruth project state
 
 ## Objective
-International, evidence-first price checker comparing the total cost of delivery for a chosen destination.
+One product URL + delivery destination -> automatic product matching, seller comparison, historical evidence and landed costs. Manual retailer entry is explicitly NOT the product.
 
 ## Architecture
-Current milestone: dependency-free static PWA on GitHub Pages, with browser-local user-entered offers. Pure ES modules, service worker and web manifest. Future backend: Cloudflare Workers + D1 for Google OAuth, saved profiles, server-side observations and alerts.
+Static GitHub Pages front end; optional Cloudflare Worker for public JSON-LD product metadata extraction. Worker code is committed but deployment requires Cloudflare account ID and API token. Future D1 for Google sign-in and observation history. Data-source integrations are not available yet.
 
-## Implemented
-Product name/URL input (not extraction); delivery country, postal code, display currency; user-entered offer form with shipping, taxes, duties, fees and discounts; user-attested cost completeness; calculation and ranking for comparable destination/currency; responsive UI; localStorage; placeholder history/account states; unit tests; Pages CI/deploy workflow.
+## Completed
+Removed manual offer form from primary UI. Implemented URL/destination form with explicit unavailable state, public structured-data extraction Worker and unit tests. No fabricated comparisons or customs estimates.
 
 ## Verified
-Local unit tests for cost calculation passed prior to publishing. CI and GitHub Pages must be checked after commit; no live verification yet.
+Source committed to GitHub; CI status and live endpoint still require verification for this milestone.
 
-## Not implemented
-Real product lookup, cross-store APIs, historical price feeds, Wayback integration, automatic international tax/FX/shipping quotes, Google sign-in, cloud account database, price alerts. Do not market as functioning live deal discovery.
+## Blockers
+1. Cloudflare account ID, scoped deploy token and Worker deployment configuration.
+2. Licensed/authorized price comparison and international delivery/import quote data sources. No automatic comparison can be honestly claimed without these.
 
-## Critical risks
-Authorized international data source coverage, destination-specific shipping and import charges, retailer licensing, exact product variant matching, account security and OAuth setup.
-
-## Next steps
-1. Verify Pages workflow, enable repository Pages using GitHub Actions if necessary, and smoke-test live URL.
-2. Evaluate actual retailer-data and international shipping quote availability before promising automatic comparisons.
-3. Implement backend and Google OAuth only after callback domain and Google OAuth credentials are configured securely.
+## Next
+Deploy Worker, configure frontend API URL, test real product URLs and coverage; integrate retailer feeds and landed-cost quotes, then Google OAuth.

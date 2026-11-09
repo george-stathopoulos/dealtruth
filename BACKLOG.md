@@ -1,20 +1,20 @@
-# DealTruth prioritized backlog
+# DealTruth backlog
 
-## P0 — Testing and trusted data
-- [x] Responsive static PWA preview, local manual offer entry and delivered-cost engine
-- [x] Cost arithmetic tests and GitHub Pages workflow
-- [ ] Verify GitHub Actions and public Pages URL
-- [ ] Research an authorized source with real product identities, historical prices and destination-specific shipping
-- [ ] Support evidence provenance and freshness in real offers
-- [ ] Add robust FX, tax, import duty and checkout quote handling
+## P0 — User journey and real data
+- [x] Remove manual seller-entry UI; require one URL and delivery destination
+- [x] Implement safe, limited structured-product metadata extraction backend (source only, not verified prices)
+- [x] Unit tests for parser and unsafe URL rejection
+- [ ] Configure Cloudflare API deployment credentials and Worker URL
+- [ ] Connect front end to Worker via deployment config (no manual browser setup)
+- [ ] Obtain authorized retailer comparison feed and product identity matching
+- [ ] Obtain destination-specific shipping, tax, duty and clearance fee estimates
+- [ ] Build complete automatic landed-cost ranking; show evidence and confidence
+- [ ] Verify complete production journey using real retailers and GR destination
 
-## P1 — Account foundation
-- [ ] Deploy secure backend (Cloudflare Workers/D1 recommended)
-- [ ] Google OAuth with PKCE, CSRF controls and secure HttpOnly sessions
-- [ ] Saved delivery profiles, data export/deletion, watchlist
+## P1 — Personalization
+- [ ] Google OAuth with secure backend session and D1
+- [ ] Saved delivery profiles and watchlist
 
-## P2 — Differentiation
-- [ ] Wayback archive snapshots where lawful and technically reliable
-- [ ] Shipping price history and suspicious change warnings
-- [ ] Scheduled price monitoring and alerts
-- [ ] Browser extension
+## P2 — Historical intelligence
+- [ ] Verified timestamped price and shipping history
+- [ ] Alerts and anomaly warnings
