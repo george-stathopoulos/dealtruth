@@ -7,3 +7,7 @@ test('caps verified international results at ten',()=>{const x=normalizeFeedOffe
 test('missing delivery components never become zero',()=>{const x=normalizeFeedOffers({offers:[{...candidate('A',100),shipping:null}]},target,'GR','ALL');assert.equal(x.offers[0].totalDelivered,null);});
 test('without provider credentials no fabricated results',async()=>{const x=await discover({},target,'GR','ALL');assert.equal(x.status,'provider_not_configured');assert.deepEqual(x.offers,[]);});
 test('identity rejects unrelated model',()=>assert.equal(matchProduct({brand:'Nothing',mpn:'Other',productName:'Nothing CMF Watch 3 Pro Dark Grey'},target),false));
+
+test('rejects wrong size even when product name matches',()=>{const desired={name:'Nike Pegasus running shoes',size:'42'};assert.equal(matchProduct({productName:'Nike Pegasus running shoes',size:'43'},desired),false);});
+test('rejects unknown color when exact color requested',()=>{const desired={name:'Nike Pegasus running shoes',color:'black'};assert.equal(matchProduct({productName:'Nike Pegasus running shoes'},desired),false);});
+test('accepts exact requested apparel variant',()=>{const desired={name:'Summer linen midi dress',size:'M',color:'blue'};assert.equal(matchProduct({productName:'Summer linen midi dress',size:'M',color:'blue'},desired),true);});
