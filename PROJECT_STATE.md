@@ -1,28 +1,28 @@
-# DealTruth — project state
+# DealTruth project state — 2026-11-09
 
-## Objective
-Universal product URL + delivery destination -> accurate identity matching, real retailer offers, delivered-price comparisons, historical evidence. No manual seller entry.
+## Goal
+Smart global shopping investigator: enter a product URL OR product-name query, answer contextual variant questions, identify exact item independently of website language, discover international sellers, calculate real delivered costs and investigate historical discount authenticity.
 
-## Implemented
-- GitHub Pages URL-first frontend and Cloudflare Worker deployed in earlier milestone.
-- Generic schema.org JSON-LD product/offer parser with brand, SKU, MPN, GTIN and multiple offers.
-- Normalized offer model, destination input and null-by-default shipping/taxes/duties/fees. No delivered-price ranking without complete costs.
-- Optional Skroutz/API.SH provider adapter; requires private provider credentials and validation.
-- Unit tests for multi-offer parsing, unknown prices and international currency separation.
-- Worker fetch timeout and streamed response byte limit.
-- International architecture documented at docs/INTERNATIONAL_ARCHITECTURE.md.
+## Implemented in main
+- PWA search UI for URLs and product names, category-aware refinements for footwear, apparel and electronics.
+- Cloudflare Worker /api/lookup, /api/search and /api/archive routes.
+- Language-neutral identity keys: GTIN first; brand + MPN/model second; translated retailer title only fallback.
+- Generic schema.org JSON-LD Product/Offer extraction and normalized offers; optional API.SH Skroutz adapter.
+- Wayback CDX snapshot discovery with links and dates. Snapshots do NOT constitute historical price observations.
+- Unknown shipping, taxes, duties and FX remain unknown; no invented delivered-cost ranking.
+- Unit tests for identity, category refinements, archive evidence and product parsing.
+- Fetch timeout and streamed response cap. SSRF and abuse protection still require hardening.
 
-## Current verification
-Latest commits pushed; current GitHub Actions and production smoke test pending. Earlier frontend and Worker deployments passed. Do not claim the latest changes are live until verified.
+## Verification
+Latest commits pushed to GitHub. GitHub Actions for latest frontend and Worker commits in progress as of last check; production functionality not yet verified. Do not call the app a working global comparison MVP.
 
-## Not yet implemented
-- Universal retailer discovery and exact variant matching across sources.
-- Authorized multi-country merchant feeds, live shipping/checkout/import quotes and FX conversions.
-- Price history, Google login, saved address and alerts.
-- Production security hardening including DNS-level SSRF mitigation and rate limiting.
+## Blocking work
+1. Authorized multi-retailer product discovery providers with international coverage and licensing.
+2. Exact size/color/condition/variant matching and automatic re-search across providers.
+3. Real destination-specific shipping, taxes/duties/fees and FX data.
+4. Archived page price extraction with strict product identity validation; timestamped D1 observation history and charts.
+5. Historical deal verdicts, anomaly detection, Google OAuth, watchlists and alerts.
+6. DNS-level SSRF mitigation, rate limiting, provider budgets, monitoring and production acceptance.
 
-## Release gate
-At least three independent retailer domains and multiple countries, verified real seller offers and destination quotes, correct product identity, full CI, live production smoke test. The current app is not a complete MVP.
-
-## Next
-Verify latest CI and production; then select and validate permitted international retailer/merchant feeds, shipping and tax providers before claiming global comparison.
+## Acceptance
+Test real footwear, clothing and electronics queries plus unrelated international URLs. Confirm genuine multiple retailer matches, valid variant filters, real delivered quotes, archive observations, full CI and production smoke tests. No fabricated sellers, costs, prices or deal verdicts.
