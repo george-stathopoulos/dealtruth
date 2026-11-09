@@ -1,5 +1,13 @@
 # DealTruth prioritized backlog
 
+## P0 — Smart discovery and guided search
+- [x] Product-name search entry and category-aware guided refinement (shoes, clothing, electronics, general)
+- [ ] Connect refined queries to actual international retailer discovery and results
+- [ ] Derive language-neutral canonical identity from URL: GTIN/EAN first, brand + MPN/model + variant second; never use translated retailer title as sole search key
+- [ ] Localized sizing systems and variant normalization (EU/UK/US sizes, color, gender/fit, condition)
+- [ ] Ask minimal category-specific follow-up questions, then re-query live providers automatically
+- [ ] Persist refinements during search and distinguish exact matches from alternatives
+
 ## P0 — International automatic deal investigation
 - [x] One URL + delivery destination; no manual seller entry
 - [x] Universal schema.org product identity and observed-offer parser
