@@ -1,0 +1,7 @@
+import test from 'node:test';import assert from 'node:assert/strict';import{totalDelivered,compareOffers,evaluateDeal}from'./pricing.js';
+test('landed costs include shipping VAT duties fees minus discounts',()=>assert.equal(totalDelivered({price:90,shipping:10,tax:20,duty:5,fees:3,discount:8}),120));
+test('unknown costs are never treated as zero',()=>assert.throws(()=>totalDelivered({price:10,shipping:null,tax:0,duty:0,fees:0,discount:0})));
+test('negative charges are rejected',()=>assert.throws(()=>totalDelivered({price:10,shipping:-1,tax:0,duty:0,fees:0,discount:0})));
+test('excess discount rejected',()=>assert.throws(()=>totalDelivered({price:10,shipping:0,tax:0,duty:0,fees:0,discount:11})));
+test('different destinations and incomplete offers excluded',()=>{const a={price:10,shipping:2,tax:0,duty:0,fees:0,discount:0,destination:'GR',currency:'EUR',availability:'in_stock',complete:true};const r=compareOffers([a,{...a,destination:'DE'},{...a,complete:false},{...a,availability:'out_of_stock'}],'GR','EUR');assert.equal(r.length,1);assert.equal(r[0].total,12)});
+test('no fabricated deal verdict when history unavailable',()=>assert.equal(evaluateDeal(20,[]).label,'Insufficient evidence'));
